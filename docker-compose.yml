@@ -1,0 +1,48 @@
+version: '3.7'
+services:
+    mysql:  
+        image: mysql:8
+        container_name: mysql_db
+        volumes:
+            - db_data:/var/lib/mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: testdb
+            MYSQL_USER: bluecode
+            MYSQL_PASSWORD: password
+        ports:
+            - "3308:3306"
+
+    phpmyadmin:
+        depends_on:
+            - mysql 
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin_db
+        links:
+            - mysql:db
+        ports: 
+            - "3030:80"
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+    
+    python_app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "3000:80"
+        volumes:
+            - .:/app/
+        links:
+            - mysql
+
+volumes:
+    db_data:
+        # external: false
+# volumes:
+#     db_data:
+        #   driver: local
+        # external: false
+    
