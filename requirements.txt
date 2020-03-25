@@ -1,1 +1,4 @@
 Flask
+# PyMySQL
+# PyMySQL==0.9.2
+pymysql==0.9.2

@@ -12,7 +12,7 @@ services:
             MYSQL_USER: bluecode
             MYSQL_PASSWORD: password
         ports:
-            - "3308:3306"
+            - "3306:3306"
 
     phpmyadmin:
         depends_on:
@@ -28,6 +28,8 @@ services:
             MYSQL_ROOT_PASSWORD: root
     
     python_app:
+        depends_on:
+            - mysql 
         build:
             context: .
             dockerfile: Dockerfile
